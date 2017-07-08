@@ -11,7 +11,7 @@ variable "AmiLinux" {
   default = {
     us-east-1 = "ami-b73b63a0"
     us-west-2 = "ami-5ec1673e"
-    eu-west-2 = "ami-79bda91d"
+    eu-west-2 = "ami-46a0b722"
   }
   description = "I add only 3 regions (Virginia, Oregon, Ireland) to show the map feature but you can add all the r"
 }
@@ -37,6 +37,16 @@ variable "DnsZoneName" {
 }
 
 variable "key_name" {
-  default = "london"
-  description = "the ssh key to use in the EC2 machines"
+  default = "aws-london"
+  description = "the ssh keyname for London region"
+}
+
+variable "public_key_path" {
+  default = "/Users/aug03/.ssh/aws-london.pub"
+  description = "the ssh public key for London region"
+}
+
+variable "private_key_path" {
+  default = "/Users/aug03/.ssh/aws-london"
+  description = "the ssh public key for London region"
 }

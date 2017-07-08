@@ -1,14 +1,14 @@
 resource "aws_security_group" "Public" {
-  name = "FrontEnd"
+  name = "Public Facing SG"
   tags {
         Name = "Public"
   }
-  description = "ONLY HTTP CONNECTION INBOUND"
+  description = "INBOUND CONNECTION FROM THE WORLD"
   vpc_id = "${aws_vpc.london_paddington.id}"
 
   ingress {
-        from_port = 80
-        to_port = 80
+        from_port = 8080
+        to_port = 8080
         protocol = "TCP"
         cidr_blocks = ["0.0.0.0/0"]
   }

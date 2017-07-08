@@ -17,18 +17,3 @@ resource "aws_route53_zone" "main" {
   vpc_id = "${aws_vpc.london_paddington.id}"
   comment = "Managed by terraform"
 }
-
-/* EXTERNAL DNS RECORDS */
-resource "aws_route53_zone" "external" {
-  name = "itiboribo43.com"
-  delegation_set_id = "N1H5DY0R34KDF8"
-  comment = "public domain"
-}
-
-resource "aws_route53_record" "www" {
-   zone_id = "${aws_route53_zone.external.zone_id}"
-   name = "mytestserver.itiboribo43.com"
-   type = "A"
-   ttl = "60"
-   records = ["${aws_instance.jenkins.public_ip}"]
-}
