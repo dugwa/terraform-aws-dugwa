@@ -8,5 +8,8 @@
 #harmless variables but still worth ignoring in version control
 variables*
 
+#chef private key
+*pem
+
 #terraform state
 terraform.tfstate*
