@@ -13,3 +13,6 @@ variables*
 
 #terraform state
 terraform.tfstate*
+
+#logs
+logfiles/*
