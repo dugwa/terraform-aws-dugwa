@@ -13,7 +13,7 @@ variable "AmiLinux" {
     us-west-2 = "ami-5ec1673e"
     eu-west-2 = "ami-59bda83d"
   }
-  description = "I add only 3 regions (Virginia, Oregon, Ireland) to show the map feature but you can add all the r"
+  description = "Map AMIs to different AWS region"
 }
 
 variable "vpc-fullcidr" {
@@ -38,5 +38,5 @@ variable "DnsZoneName" {
 
 variable "key_name" {
   default = "london"
-  description = "the ssh key to use in the EC2 machines"
+  description = "the ssh key to use in the EC2 machines in London region"
 }
