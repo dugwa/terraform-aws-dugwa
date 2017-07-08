@@ -18,14 +18,6 @@ resource "aws_route53_zone" "main" {
   comment = "Managed by terraform"
 }
 
-resource "aws_route53_record" "database" {
-   zone_id = "${aws_route53_zone.main.zone_id}"
-   name = "mydatabase.${var.DnsZoneName}"
-   type = "A"
-   ttl = "60"
-   records = ["${aws_instance.database.private_ip}"]
-}
-
 /* EXTERNAL DNS RECORDS */
 resource "aws_route53_zone" "external" {
   name = "itiboribo43.com"
@@ -38,5 +30,5 @@ resource "aws_route53_record" "www" {
    name = "mytestserver.itiboribo43.com"
    type = "A"
    ttl = "60"
-   records = ["${aws_instance.phpapp.public_ip}"]
+   records = ["${aws_instance.jenkins.public_ip}"]
 }

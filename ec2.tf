@@ -1,47 +1,25 @@
-resource "aws_instance" "phpapp" {
+resource "aws_instance" "jenkins" {
   ami           = "${lookup(var.AmiLinux, var.region)}"
   instance_type = "t2.micro"
   associate_public_ip_address = "true"
   subnet_id = "${aws_subnet.Public.id}"
-  vpc_security_group_ids = ["${aws_security_group.FrontEnd.id}"]
+  vpc_security_group_ids = ["${aws_security_group.Public.id}"]
   key_name = "${var.key_name}"
-  tags {
-        Name = "phpapp"
-  }
-  user_data = <<HEREDOC
-  #!/bin/bash
-  yum update -y
-  yum install -y httpd24 php56 php56-mysqlnd
-  service httpd start
-  chkconfig httpd on
-  echo "<?php" >> /var/www/html/calldb.php
-  echo "\$conn = new mysqli('mydatabase.linuxacademy.internal', 'root', 'secret', 'test');" >> /var/www/html/calldb.php
-  echo "\$sql = 'SELECT * FROM mytable'; " >> /var/www/html/calldb.php
-  echo "\$result = \$conn->query(\$sql); " >>  /var/www/html/calldb.php
-  echo "while(\$row = \$result->fetch_assoc()) { echo 'the value is: ' . \$row['mycol'] ;} " >> /var/www/html/calldb.php
-  echo "\$conn->close(); " >> /var/www/html/calldb.php
-  echo "?>" >> /var/www/html/calldb.php
-HEREDOC
-}
 
-resource "aws_instance" "database" {
-  ami           = "${lookup(var.AmiLinux, var.region)}"
-  instance_type = "t2.micro"
-  associate_public_ip_address = "false"
-  subnet_id = "${aws_subnet.Private.id}"
-  vpc_security_group_ids = ["${aws_security_group.Database.id}"]
-  key_name = "${var.key_name}"
+  provisioner "chef" {
+    server_url = "https://ec2-54-194-169-246.eu-west-1.compute.amazonaws.com/organizations/aws_ireland"
+    validation_client_name = "&lt;your-client-name&gt;"
+    validation_key_path = "~/git/chef-repo/.chef/&lt;your-validator-key&gt;.pem"
+    node_name = "dbserver"
+    run_list = [ "apt", "testapp::db" ]
+  }
+
+
   tags {
-        Name = "database"
+        Name = "jenkins server"
   }
   user_data = <<HEREDOC
   #!/bin/bash
   yum update -y
-  yum install -y mysql55-server
-  service mysqld start
-  /usr/bin/mysqladmin -u root password 'secret'
-  mysql -u root -psecret -e "create user 'root'@'%' identified by 'secret';" mysql
-  mysql -u root -psecret -e 'CREATE TABLE mytable (mycol varchar(255));' test
-  mysql -u root -psecret -e "INSERT INTO mytable (mycol) values ('linuxacademythebest') ;" test
-HEREDOC
+  HEREDOC
 }

@@ -11,7 +11,7 @@ variable "AmiLinux" {
   default = {
     us-east-1 = "ami-b73b63a0"
     us-west-2 = "ami-5ec1673e"
-    eu-west-2 = "ami-59bda83d"
+    eu-west-2 = "ami-79bda91d"
   }
   description = "I add only 3 regions (Virginia, Oregon, Ireland) to show the map feature but you can add all the r"
 }
