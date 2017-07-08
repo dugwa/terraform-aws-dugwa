@@ -50,3 +50,8 @@ variable "private_key_path" {
   default = "/Users/aug03/.ssh/aws-london"
   description = "the ssh public key for London region"
 }
+
+variable "chef_server_url" {
+  default = ""https://ec2-54-194-169-246.eu-west-1.compute.amazonaws.com/organizations/aws_ireland""
+  description = "the ssh public key for London region"
+}

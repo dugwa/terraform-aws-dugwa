@@ -5,5 +5,11 @@
 .*.sw[a-z]
 *.un~
 
+#chef key
+*pem
+
+#harmless variables but still worth ignoring in version control
+variables*
+
 #terraform state
 terraform.tfstate*

@@ -14,7 +14,7 @@ resource "aws_instance" "jenkins" {
   key_name = "${aws_key_pair.auth.id}"
 
   provisioner "chef" {
-    server_url = "https://ec2-54-194-169-246.eu-west-1.compute.amazonaws.com/organizations/aws_ireland"
+    server_url = "${var.chef_server_url}""
     environment     = "lab"
     node_name       = "${aws_instance.jenkins.private_dns}"
     version         = "12.19.36"
