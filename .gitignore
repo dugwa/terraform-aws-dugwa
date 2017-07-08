@@ -1,0 +1,9 @@
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+
+#terraform state
+terraform.tfstate*

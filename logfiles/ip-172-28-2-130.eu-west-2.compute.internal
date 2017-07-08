@@ -1,0 +1,148 @@
+Starting Chef Client, version 12.7.2
+resolving cookbooks for run list: ["jenkins", "jenkins::packages"]
+Synchronizing Cookbooks:
+  - jenkins (0.1.0)
+  - iptables (3.0.1)
+  - compat_resource (12.16.1)
+  - rails (0.1.0)
+Compiling Cookbooks...
+[2017-07-08T19:14:52+00:00] WARN: Cloning resource attributes for execute[packages] from prior resource (CHEF-3694)
+[2017-07-08T19:14:52+00:00] WARN: Previous execute[packages]: /var/chef/cache/cookbooks/jenkins/recipes/packages.rb:4:in `block in from_file'
+[2017-07-08T19:14:52+00:00] WARN: Current  execute[packages]: /var/chef/cache/cookbooks/jenkins/recipes/packages.rb:4:in `block in from_file'
+[2017-07-08T19:14:52+00:00] WARN: Cloning resource attributes for execute[packages] from prior resource (CHEF-3694)
+[2017-07-08T19:14:52+00:00] WARN: Previous execute[packages]: /var/chef/cache/cookbooks/jenkins/recipes/packages.rb:4:in `block in from_file'
+[2017-07-08T19:14:52+00:00] WARN: Current  execute[packages]: /var/chef/cache/cookbooks/jenkins/recipes/packages.rb:4:in `block in from_file'
+[2017-07-08T19:14:52+00:00] WARN: Cloning resource attributes for execute[packages] from prior resource (CHEF-3694)
+[2017-07-08T19:14:52+00:00] WARN: Previous execute[packages]: /var/chef/cache/cookbooks/jenkins/recipes/packages.rb:4:in `block in from_file'
+[2017-07-08T19:14:52+00:00] WARN: Current  execute[packages]: /var/chef/cache/cookbooks/jenkins/recipes/packages.rb:4:in `block in from_file'
+[2017-07-08T19:14:52+00:00] WARN: Cloning resource attributes for execute[packages] from prior resource (CHEF-3694)
+[2017-07-08T19:14:52+00:00] WARN: Previous execute[packages]: /var/chef/cache/cookbooks/jenkins/recipes/packages.rb:4:in `block in from_file'
+[2017-07-08T19:14:52+00:00] WARN: Current  execute[packages]: /var/chef/cache/cookbooks/jenkins/recipes/packages.rb:4:in `block in from_file'
+Converging 15 resources
+Recipe: jenkins::install
+  * template[/opt/install_java.sh] action create
+    - create new file /opt/install_java.sh
+    - update content in file /opt/install_java.sh from none to eb82b5
+    --- /opt/install_java.sh	2017-07-08 19:14:52.173562021 +0000
+    +++ /opt/.install_java.sh20170708-8451-plt8nc	2017-07-08 19:14:52.173562021 +0000
+    @@ -1 +1,46 @@
+    +# hostname ip-172-28-2-130.eu-west-2.compute.internal
+    +#
+    +#
+    +########################################################################################
+    +#
+    +#    ###   #   #  #####  #####
+    +#   #   #  #   #  #      #
+    +#   #      #   #  #      #
+    +#   #      #####  ####   ####
+    +#   #      #   #  #      #
+    +#   #   #  #   #  #      #
+    +#    ###   #   #  #####  #
+    +#
+    +# This file is managed by CHEF. Do not edit locally
+    +#
+    +########################################################################################
+    +# Source: jenkins::templates/default/java.sh.erb
+    +########################################################################################
+    +
+    +#!/bin/bash
+    +
+    +yum install epel-release -y
+    +
+    +sleep 5
+    +
+    +yum install java-1.8.0-openjdk-1.8.0.111-1.b15.el7_2.x86_64 -y
+    +
+    +sleep 5
+    +
+    +java -version
+    +
+    +cp /etc/profile /etc/profile_backup
+    +
+    +echo 'export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk' | sudo tee -a /etc/profile
+    +echo 'export JRE_HOME=/usr/lib/jvm/jre' | sudo tee -a /etc/profile
+    +
+    +source /etc/profile
+    +
+    +sleep 5
+    +
+    +echo $JAVA_HOME
+    +
+    +echo $JRE_HOME
+    +
+    +exit 0
+    - change mode from '' to '0755'
+    - change owner from '' to 'root'
+    - change group from '' to 'root'
+    - restore selinux security context
+  * template[/opt/install_jenkins.sh] action create
+    - create new file /opt/install_jenkins.sh
+    - update content in file /opt/install_jenkins.sh from none to 56ebf9
+    --- /opt/install_jenkins.sh	2017-07-08 19:14:52.262562032 +0000
+    +++ /opt/.install_jenkins.sh20170708-8451-1r3f6uo	2017-07-08 19:14:52.262562032 +0000
+    @@ -1 +1,29 @@
+    +# hostname ip-172-28-2-130.eu-west-2.compute.internal
+    +#
+    +#
+    +########################################################################################
+    +#
+    +#    ###   #   #  #####  #####
+    +#   #   #  #   #  #      #
+    +#   #      #   #  #      #
+    +#   #      #####  ####   ####
+    +#   #      #   #  #      #
+    +#   #   #  #   #  #      #
+    +#    ###   #   #  #####  #
+    +#
+    +# This file is managed by CHEF. Do not edit locally
+    +#
+    +########################################################################################
+    +# Source: jenkins::templates/default/jenkins.sh.erb
+    +########################################################################################
+    +
+    +#!/bin/bash
+    +
+    +yum install wget -y
+    +
+    +wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+    +
+    +rpm --import http://pkg.jenkins-ci.org/redhat-stable/jenkins-ci.org.key
+    +
+    +yum --enablerepo=jenkins install jenkins-2.19.1-1.1.noarch -y
+    - change mode from '' to '0755'
+    - change owner from '' to 'root'
+    - change group from '' to 'root'
+    - restore selinux security context
+  * log[starting installation of java version 8] action write
+  
+  * execute[install_java] action run
+    - execute bash /opt/install_java.sh
+  * log[starting installation of jenkins] action write
+  
+  * execute[install_jenkins] action run
+    - execute bash /opt/install_jenkins.sh
+  * service[jenkins.service] action enable (up to date)
+  * service[jenkins.service] action start
+    - start service service[jenkins.service]
+  * service[firewalld.service] action enable (up to date)
+  * service[firewalld.service] action start
+    - start service service[firewalld.service]
+  * execute[open jenkins port] action run
+    - execute firewall-cmd --zone=public --permanent --add-port=8080/tcp && firewall-cmd --reload
+  * log[you have just successfully installed jenkins] action write
+  
+Recipe: jenkins::packages
+  * execute[packages] action run
+    - execute yum install -y rsync
+  * execute[packages] action run
+    - execute yum install -y openssh-clients
+  * execute[packages] action run
+    - execute yum install -y git
+  * execute[packages] action run
+    - execute yum install -y nc
+  * execute[packages] action run
+    - execute yum install -y telnet
+
+Running handlers:
+Running handlers complete
+Chef Client finished, 15/17 resources updated in 01 minutes 11 seconds

@@ -17,7 +17,7 @@ resource "aws_instance" "jenkins" {
     server_url = "https://ec2-54-194-169-246.eu-west-1.compute.amazonaws.com/organizations/aws_ireland"
     environment     = "lab"
     node_name       = "${aws_instance.jenkins.private_dns}"
-    version         = "12.7.2"
+    version         = "12.19.36"
     run_list = ["role[jenkins]"]
     log_to_file = true
     recreate_client = true
