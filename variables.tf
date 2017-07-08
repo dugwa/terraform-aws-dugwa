@@ -13,7 +13,7 @@ variable "AmiLinux" {
     us-west-2 = "ami-5ec1673e"
     eu-west-2 = "ami-46a0b722"
   }
-  description = "I add only 3 regions (Virginia, Oregon, Ireland) to show the map feature but you can add all the r"
+  description = "Map AMIs to different regions"
 }
 
 variable "vpc-fullcidr" {
